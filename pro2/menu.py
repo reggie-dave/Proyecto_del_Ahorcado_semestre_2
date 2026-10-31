@@ -14,6 +14,20 @@ import os
 def limpiar():
     os.system("cls")  
 
+def regresar():
+    while True:
+        opcion = input("Quiere regresar al menu principal?. seleccione 'si' o 'no': ")
+        try:
+            if opcion == "si":
+                return True, limpiar()
+            elif opcion == "no":
+                return False
+            elif opcion != "si" or "no":
+                print("Por favor ingrese 'si' o 'no' para continuar.")
+                continue
+        except ValueError, TypeError, IndexError:
+            print("Ingrese un valor valido.")
+
 # Solicita un nombre y comprueba que sea válido
 def solicitar_nombre(mensaje):
     while True:
@@ -22,7 +36,7 @@ def solicitar_nombre(mensaje):
 
         if not nombre:
             
-            print("El nombre no puede estar vacío.")
+            print("El nombre no puede estar vacio.")
             continue
 
         if len(nombre) > 30:
@@ -50,8 +64,12 @@ def solicitar_nombre(mensaje):
 def solicitar_dificultad():
     while True:
         dificultad = input(
-            "Dificultad (Facil/Medio/Dificil): "
-        ).strip().lower()
+            f"""Para continuar seleccione una dificultad:
+1. Facil: tienes 7 vidas y palabras cortas.
+2. Medio: tienes 6 vidas y palabras un poco mas largas.
+3. Dificil tienes 5 vidas y palabras mucho mas largas.
+Seleccione Facil, Medio o Dificil para continuar.\n:"""
+).strip().lower()
 
         if dificultad in ("facil", "medio", "dificil"):
             return dificultad
@@ -69,7 +87,7 @@ def solicitar_categoria():
         if categoria in ("animales", "tecnologia", "frutas"):
             return categoria
 
-        print("Categoría inválida. Escribe Animales, Tecnologia o Frutas.")
+        print("Categoria invalida. Escribe Animales, Tecnologia o Frutas.")
 
 
 # Muestra el menú principal del programa
@@ -78,7 +96,7 @@ def menu():
         # Carga las estadísticas guardadas al iniciar
         cargar_estadisticas()
     except (OSError, ValueError, TypeError) as error:
-        print("No se pudieron cargar las estadísticas:", error)
+        print("No se pudieron cargar las estadisticas:", error)
 
     while True:
         print("\n=== JUEGO DEL AHORCADO ===")
@@ -101,15 +119,13 @@ def menu():
             # Inicia el juego individual
             elif opcion == "1":
                 limpiar()
-                nombre = solicitar_nombre("Nombre del jugador: ")
-                dificultad = solicitar_dificultad()
+                nombre = solicitar_nombre("Ingrese su Nombre: ")
+                limpiar()
+                print(f"===BIENVENIDO {nombre}===")
+                solicitar_dificultad()
                 categoria = solicitar_categoria()
                 iniciar_partida(nombre, dificultad, categoria)
-                opcion= input("Desea salir: ")
-                if opcion == "s":
-                    limpiar()
-                    continue
-                else:
+                if regresar() == False:
                     break
 
             # Inicia el juego de dos jugadores
@@ -136,33 +152,21 @@ def menu():
                     nombre1,
                     nombre2
                 )
-                opcion= input("Desea volver: ")
-                if opcion == "s":
-                    limpiar()
-                    continue
-                else:
+                if regresar() == False:
                     break
 
             # Muestra las estadísticas
             elif opcion == "3":
                 limpiar()
                 mostrar_estadisticas()
-                opcion= input("Desea salir: ")
-                if opcion == "s":
-                    limpiar()
-                    continue
-                else:
+                if regresar() == False:
                     break
 
             # Muestra las instrucciones
             elif opcion == "4":
                 limpiar()
                 mostrar_instrucciones()
-                opcion= input("Desea salir: ")
-                if opcion == "s":
-                    limpiar()
-                    continue
-                else:
+                if regresar() == False:
                     break
 
             # Reinicia las estadísticas después de confirmar
@@ -191,11 +195,7 @@ def menu():
                 limpiar()
                 chiste_uno()
                 chiste_dos()
-                opcion= input("Desea salir: ")
-                if opcion == "s":
-                    limpiar()
-                    continue
-                else:
+                if regresar() == False:
                     break
 
             # Finaliza el programa
