@@ -9,21 +9,29 @@ from estadisticas import (
 from instrucciones import mostrar_instrucciones
 from chistes import chiste_uno, chiste_dos
 from multijugador import iniciar_multijugador
+import os
+
+def limpiar():
+    os.system("cls")  
 
 # Solicita un nombre y comprueba que sea válido
 def solicitar_nombre(mensaje):
     while True:
+        
         nombre = input(mensaje).strip()
 
         if not nombre:
+            
             print("El nombre no puede estar vacío.")
             continue
 
         if len(nombre) > 30:
+            limpiar()
             print("El nombre no puede superar los 30 caracteres.")
             continue
 
         if not all(letra.isalpha() or letra.isspace() for letra in nombre):
+            
             print("El nombre solo puede contener letras y espacios.")
             continue
 
@@ -31,6 +39,7 @@ def solicitar_nombre(mensaje):
         cantidad_letras = sum(letra.isalpha() for letra in nombre)
 
         if cantidad_letras < 5:
+            
             print("El nombre debe tener al menos 5 letras.")
             continue
 
@@ -91,19 +100,29 @@ def menu():
 
             # Inicia el juego individual
             elif opcion == "1":
+                limpiar()
                 nombre = solicitar_nombre("Nombre del jugador: ")
                 dificultad = solicitar_dificultad()
                 categoria = solicitar_categoria()
                 iniciar_partida(nombre, dificultad, categoria)
+                opcion= input("Desea salir: ")
+                if opcion == "s":
+                    limpiar()
+                    continue
+                else:
+                    break
 
             # Inicia el juego de dos jugadores
             elif opcion == "2":
+                limpiar()
                 dificultad = solicitar_dificultad()
                 categoria = solicitar_categoria()
                 nombre1 = solicitar_nombre("Nombre del jugador 1: ")
+            
 
                 # Solicita otro nombre si los dos son iguales
                 while True:
+                    
                     nombre2 = solicitar_nombre("Nombre del jugador 2: ")
 
                     if nombre1.casefold() != nombre2.casefold():
@@ -117,17 +136,38 @@ def menu():
                     nombre1,
                     nombre2
                 )
+                opcion= input("Desea volver: ")
+                if opcion == "s":
+                    limpiar()
+                    continue
+                else:
+                    break
 
             # Muestra las estadísticas
             elif opcion == "3":
+                limpiar()
                 mostrar_estadisticas()
+                opcion= input("Desea salir: ")
+                if opcion == "s":
+                    limpiar()
+                    continue
+                else:
+                    break
 
             # Muestra las instrucciones
             elif opcion == "4":
+                limpiar()
                 mostrar_instrucciones()
+                opcion= input("Desea salir: ")
+                if opcion == "s":
+                    limpiar()
+                    continue
+                else:
+                    break
 
             # Reinicia las estadísticas después de confirmar
             elif opcion == "5":
+                limpiar()
                 confirmar = input(
                     "¿Seguro que desea reiniciar las estadísticas? (s/n): "
                 ).strip().lower()
@@ -139,14 +179,28 @@ def menu():
                     print("Operación cancelada.")
                 else:
                     print("Respuesta inválida. Escribe s o n.")
+                opcion= input("Desea salir: ")
+                if opcion == "s":
+                    limpiar()
+                    continue
+                else:
+                    break
 
             # Muestra los chistes de programadores
             elif opcion == "6":
+                limpiar()
                 chiste_uno()
                 chiste_dos()
+                opcion= input("Desea salir: ")
+                if opcion == "s":
+                    limpiar()
+                    continue
+                else:
+                    break
 
             # Finaliza el programa
             elif opcion == "7":
+                limpiar()
                 print("¡Hasta luego!")
                 break
 

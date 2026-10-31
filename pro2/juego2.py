@@ -3,7 +3,10 @@ from pala import palabras
 from muneco import mostrar_ahorcado
 from estadisticas import estadisticas, guardar_estadisticas, racha
 from estructuras import Pila, Cola
+import os
 
+def limpiar():
+    os.system("cls") 
 def iniciar_partida(nombre, dificultad, categoria):
     palabra = palabras(dificultad, categoria)
     palabra_mostrada = ["_" for _ in palabra]
@@ -14,6 +17,7 @@ def iniciar_partida(nombre, dificultad, categoria):
     letras_incorrectas = Cola()
 
     while vidas > 0 and "_" in palabra_mostrada:
+        limpiar()
         print("\nJugador:", nombre, " | Puntos:", puntos, " | Vidas:", vidas, " | Racha:", racha)
         print("Palabra:", " ".join(palabra_mostrada))
         print("Letras incorrectas:", ", ".join(letras_incorrectas.items))
